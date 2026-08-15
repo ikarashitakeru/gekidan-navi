@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  theater: one
+  title: MyString
+  description: MyText
+  capacity: 1
+  deadline: 2026-08-11
+  activity_area: MyString
+  status: 1
+
+two:
+  theater: two
+  title: MyString
+  description: MyText
+  capacity: 1
+  deadline: 2026-08-11
+  activity_area: MyString
+  status: 1

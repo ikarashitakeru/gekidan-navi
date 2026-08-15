@@ -1,0 +1,89 @@
+<header class="border-bottom bg-white">
+  <div class="container py-3">
+    <div class="d-flex justify-content-between align-items-center">
+
+      <div>
+        <%= link_to "劇団ナビ",
+                    root_path,
+                    class: "text-decoration-none text-dark fw-bold fs-4" %>
+      </div>
+
+      <nav class="d-flex gap-3 align-items-center">
+
+        <% if user_signed_in? %>
+
+          <%= link_to "ホーム",
+                      root_path,
+                      class: "text-decoration-none text-dark" %>
+
+          <%= link_to "募集を探す",
+                      public_recruitments_path,
+                      class: "text-decoration-none text-dark" %>
+
+          <span class="text-muted">
+            マイページ
+          </span>
+
+          <%= button_to "ログアウト",
+                        destroy_user_session_path,
+                        method: :delete,
+                        class: "btn btn-link text-decoration-none text-dark p-0 border-0" %>
+
+
+        <% elsif theater_signed_in? %>
+
+          <%= link_to "劇団マイページ",
+                      theater_root_path,
+                      class: "text-decoration-none text-dark" %>
+
+          <span class="text-muted">
+            募集管理
+          </span>
+
+          <span class="text-muted">
+            応募者管理
+          </span>
+
+          <span class="text-muted">
+            スカウト
+          </span>
+
+          <%= button_to "ログアウト",
+                        destroy_theater_session_path,
+                        method: :delete,
+                        class: "btn btn-link text-decoration-none text-dark p-0 border-0" %>
+
+
+        <% else %>
+
+          <%= link_to "ホーム",
+                      root_path,
+                      class: "text-decoration-none text-dark" %>
+
+          <%= link_to "募集を探す",
+                      public_recruitments_path,
+                      class: "text-decoration-none text-dark" %>
+
+          <%= link_to "ユーザーログイン",
+                      new_user_session_path,
+                      class: "text-decoration-none text-dark" %>
+
+          <%= link_to "ユーザー新規登録",
+                      new_user_registration_path,
+                      class: "text-decoration-none text-dark" %>
+
+          <%= link_to "劇団ログイン",
+                      new_theater_session_path,
+                      class: "text-decoration-none text-dark" %>
+
+          <%= link_to "劇団新規登録",
+                      new_theater_registration_path,
+                      class: "text-decoration-none text-dark" %>
+
+        <% end %>
+
+      </nav>
+
+    </div>
+  </div>
+</header>
