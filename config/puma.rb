@@ -39,3 +39,20 @@ plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+
+threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
+threads threads_count, threads_count
+ 
+# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+# port ENV.fetch("PORT", 3000) ← これは削除 or コメントアウト
+bind "unix://#{Dir.getwd}/tmp/sockets/puma.sock" ← 追記
+ 
+# Allow puma to be restarted by `bin/rails restart` command.
+plugin :tmp_restart
+ 
+# Run the Solid Queue supervisor inside of Puma for single-server deployments
+plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
+ 
+# Specify the PID file. Defaults to tmp/pids/server.pid in development.
+# In other environments, only set the PID file if requested.
+pidfile "tmp/pids/puma.pid"
