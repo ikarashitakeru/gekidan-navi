@@ -1,0 +1,52 @@
+<div class="container py-5">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">募集管理</h2>
+
+    <%= link_to "新しい募集を作成",
+                new_theater_recruitment_path,
+                class: "btn btn-primary" %>
+  </div>
+
+  <% if @recruitments.any? %>
+
+    <% @recruitments.each do |recruitment| %>
+      <div class="card shadow-sm mb-3">
+        <div class="card-body">
+
+          <h4 class="fw-bold">
+            <%= recruitment.title %>
+          </h4>
+
+          <p class="mb-2">
+            活動地域：
+            <%= recruitment.activity_area %>
+          </p>
+
+          <p class="mb-2">
+            応募締切：
+            <%= recruitment.deadline %>
+          </p>
+
+          <p class="mb-3">
+            募集状態：
+            <%= recruitment.open? ? "募集中" : "募集終了" %>
+          </p>
+
+          <%= link_to "詳細を見る",
+                      theater_recruitment_path(recruitment),
+                      class: "btn btn-outline-primary" %>
+
+        </div>
+      </div>
+    <% end %>
+
+  <% else %>
+
+    <div class="alert alert-light border">
+      まだ募集を投稿していません。
+    </div>
+
+  <% end %>
+
+</div>

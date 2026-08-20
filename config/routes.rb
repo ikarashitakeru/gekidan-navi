@@ -5,12 +5,21 @@ Rails.application.routes.draw do
 
   # ユーザー側
   namespace :public do
+    resource :user, only: [:show, :edit, :update] do
+      get :unsubscribe
+      patch :withdraw
+    end
+
     resources :recruitments, only: [:index, :show]
   end
 
   # 劇団側
   namespace :theater do
     root "homes#top"
+
+    resource :theater, only: [:show, :edit, :update]
+    resources :recruitments
+    resources :users, only: [:index, :show]
   end
 
   # ユーザー側トップ
