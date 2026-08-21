@@ -1,0 +1,61 @@
+<div class="container py-5">
+
+  <h2 class="fw-bold mb-4">応募者管理</h2>
+
+  <% if @applications.any? %>
+
+    <% @applications.each do |application| %>
+      <div class="card shadow-sm mb-3">
+        <div class="card-body">
+
+          <h4 class="fw-bold mb-3">
+            <%= application.user.name %>
+          </h4>
+
+          <p class="mb-1">
+            <strong>応募した募集：</strong>
+            <%= application.recruitment.title %>
+          </p>
+
+          <p class="mb-1">
+            <strong>希望地域：</strong>
+            <%= application.user.preferred_area %>
+          </p>
+
+          <p class="mb-1">
+            <strong>応募日：</strong>
+            <%= application.created_at.strftime("%Y年%m月%d日") %>
+          </p>
+
+          <p class="mb-3">
+            <strong>選考状況：</strong>
+
+            <% case application.selection_status %>
+            <% when "applied" %>
+              応募済み
+            <% when "screening" %>
+              選考中
+            <% when "accepted" %>
+              合格
+            <% when "rejected" %>
+              不合格
+            <% end %>
+          </p>
+
+          <%= link_to "応募詳細を見る",
+                      theater_application_path(application),
+                      class: "btn btn-outline-primary" %>
+
+        </div>
+      </div>
+    <% end %>
+
+  <% else %>
+
+    <div class="alert alert-light border">
+      現在、応募者はいません。
+    </div>
+
+  <% end %>
+
+</div>

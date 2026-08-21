@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_15_010533) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_20_060937) do
+  create_table "applications", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "recruitment_id", null: false
+    t.text "motivation"
+    t.integer "selection_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recruitment_id"], name: "index_applications_on_recruitment_id"
+    t.index ["user_id"], name: "index_applications_on_user_id"
+  end
+
   create_table "recruitments", force: :cascade do |t|
     t.integer "theater_id", null: false
     t.string "title"
@@ -58,5 +69,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_15_010533) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "applications", "recruitments"
+  add_foreign_key "applications", "users"
   add_foreign_key "recruitments", "theaters"
 end

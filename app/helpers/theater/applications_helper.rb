@@ -1,0 +1,2 @@
+module Theater::ApplicationsHelper
+end
