@@ -1,0 +1,87 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+
+          <h2 class="fw-bold mb-4">応募詳細</h2>
+
+          <div class="mb-3">
+            <strong>応募者名</strong>
+            <p><%= @application.user.name %></p>
+          </div>
+
+          <div class="mb-3">
+            <strong>応募した募集</strong>
+            <p><%= @application.recruitment.title %></p>
+          </div>
+
+          <div class="mb-3">
+            <strong>希望地域</strong>
+            <p><%= @application.user.preferred_area %></p>
+          </div>
+
+          <div class="mb-3">
+            <strong>演技経験</strong>
+            <p><%= @application.user.acting_experience %></p>
+          </div>
+
+          <div class="mb-3">
+            <strong>歌唱経験</strong>
+            <p><%= @application.user.singing_experience %></p>
+          </div>
+
+          <div class="mb-3">
+            <strong>ダンス経験</strong>
+            <p><%= @application.user.dance_experience %></p>
+          </div>
+
+          <div class="mb-4">
+            <strong>志望動機</strong>
+            <%= simple_format(@application.motivation) %>
+          </div>
+
+          <hr>
+
+          <h4 class="fw-bold mb-3">選考状況</h4>
+
+          <%= form_with model: @application,
+                        url: theater_application_path(@application),
+                        method: :patch,
+                        local: true do |f| %>
+
+            <div class="mb-3">
+              <%= f.select :selection_status,
+                           Application.selection_statuses.keys.map { |status|
+                             [
+                               {
+                                 "applied" => "応募済み",
+                                 "screening" => "選考中",
+                                 "accepted" => "合格",
+                                 "rejected" => "不合格"
+                               }[status],
+                               status
+                             ]
+                           },
+                           {},
+                           class: "form-select" %>
+            </div>
+
+            <%= f.submit "選考状況を更新",
+                         class: "btn btn-primary" %>
+
+          <% end %>
+
+          <div class="mt-3">
+            <%= link_to "応募者一覧へ戻る",
+                        theater_applications_path,
+                        class: "btn btn-outline-secondary" %>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -10,16 +10,23 @@ Rails.application.routes.draw do
       patch :withdraw
     end
 
-    resources :recruitments, only: [:index, :show]
+    resources :recruitments, only: [:index, :show] do
+      resources :applications, only: [:new, :create]
+    end
+
+    resources :applications, only: [:index, :show]
   end
 
   # 劇団側
   namespace :theater do
+    get "applications/index"
+    get "applications/show"
     root "homes#top"
 
     resource :theater, only: [:show, :edit, :update]
     resources :recruitments
     resources :users, only: [:index, :show]
+    resources :applications, only: [:index, :show, :update]
   end
 
   # ユーザー側トップ

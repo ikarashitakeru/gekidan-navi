@@ -1,0 +1,69 @@
+<div class="container py-4 py-md-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+
+      <div class="card shadow-sm">
+        <div class="card-body p-3 p-md-4">
+
+          <h2 class="fw-bold mb-4">
+            応募詳細
+          </h2>
+
+          <div class="mb-3">
+            <strong>募集タイトル</strong>
+            <p class="mb-0">
+              <%= @application.recruitment.title %>
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <strong>劇団名</strong>
+            <p class="mb-0">
+              <%= @application.recruitment.theater.name %>
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <strong>志望動機</strong>
+            <%= simple_format(@application.motivation) %>
+          </div>
+
+          <div class="mb-3">
+            <strong>選考状況</strong>
+            <p class="mb-0">
+              <% case @application.selection_status %>
+              <% when "applied" %>
+                応募済み
+              <% when "screening" %>
+                選考中
+              <% when "accepted" %>
+                合格
+              <% when "rejected" %>
+                不合格
+              <% end %>
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <strong>応募日時</strong>
+            <p class="mb-0">
+              <%= @application.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+            </p>
+          </div>
+
+          <div class="d-grid d-md-flex gap-2 gap-md-3">
+            <%= link_to "応募履歴へ",
+                        public_applications_path,
+                        class: "btn btn-primary" %>
+
+            <%= link_to "募集詳細へ",
+                        public_recruitment_path(@application.recruitment),
+                        class: "btn btn-outline-secondary" %>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
