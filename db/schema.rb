@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_20_060937) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_21_091542) do
   create_table "applications", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "recruitment_id", null: false
+    t.bigint "user_id"
+    t.bigint "recruitment_id"
     t.text "motivation"
     t.integer "selection_status"
     t.datetime "created_at", null: false
@@ -23,7 +23,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_20_060937) do
   end
 
   create_table "recruitments", force: :cascade do |t|
-    t.integer "theater_id", null: false
+    t.bigint "theater_id"
     t.string "title"
     t.text "description"
     t.integer "capacity"
