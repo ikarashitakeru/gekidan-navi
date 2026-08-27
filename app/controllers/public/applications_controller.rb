@@ -1,7 +1,7 @@
 class Public::ApplicationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_recruitment, only: [:new, :create]
-  before_action :set_application, only: [:show]
+  before_action :set_recruitment, only: [ :new, :create ]
+  before_action :set_application, only: [ :show ]
 
   def index
     @applications = current_user.applications

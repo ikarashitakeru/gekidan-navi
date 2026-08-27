@@ -1,7 +1,7 @@
 class Admin::RecruitmentsController < ApplicationController
   before_action :authenticate_admin!
   before_action :set_recruitment,
-                only: [:show, :edit, :update, :destroy]
+                only: [ :show, :edit, :update, :destroy ]
 
   def index
     @recruitments = Recruitment.includes(:theater).all

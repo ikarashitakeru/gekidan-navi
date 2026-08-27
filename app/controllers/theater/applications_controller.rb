@@ -1,6 +1,6 @@
 class Theater::ApplicationsController < ApplicationController
   before_action :authenticate_theater!
-  before_action :set_application, only: [:show, :update]
+  before_action :set_application, only: [ :show, :update ]
 
   def index
     @applications = Application

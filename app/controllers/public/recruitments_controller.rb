@@ -1,5 +1,4 @@
 class Public::RecruitmentsController < ApplicationController
-
   def index
     @recruitments = Recruitment.includes(:theater, :genre)
                                .order(created_at: :desc)
@@ -36,5 +35,4 @@ class Public::RecruitmentsController < ApplicationController
   def show
     @recruitment = Recruitment.find(params[:id])
   end
-
 end

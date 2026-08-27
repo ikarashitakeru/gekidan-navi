@@ -1,6 +1,6 @@
 class Public::ScoutsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_scout, only: [:show, :accept, :decline]
+  before_action :set_scout, only: [ :show, :accept, :decline ]
 
   def index
     @scouts = current_user.scouts

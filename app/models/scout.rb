@@ -11,7 +11,7 @@ class Scout < ApplicationRecord
 
   validates :user_id,
             uniqueness: {
-              scope: [:theater_id, :recruitment_id],
+              scope: [ :theater_id, :recruitment_id ],
               message: "にはこの募集ですでにスカウトを送信しています"
             }
 

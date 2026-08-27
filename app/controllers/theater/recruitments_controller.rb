@@ -1,6 +1,6 @@
 class Theater::RecruitmentsController < ApplicationController
   before_action :authenticate_theater!
-  before_action :set_recruitment, only: [:show, :edit, :update, :destroy]
+  before_action :set_recruitment, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @recruitments = current_theater.recruitments.order(created_at: :desc)

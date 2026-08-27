@@ -1,6 +1,6 @@
 class Theater::ScoutsController < ApplicationController
   before_action :authenticate_theater!
-  before_action :set_user, only: [:new, :create]
+  before_action :set_user, only: [ :new, :create ]
 
   def index
     @scouts = current_theater.scouts.includes(:user, :recruitment)

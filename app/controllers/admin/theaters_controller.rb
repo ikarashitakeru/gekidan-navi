@@ -1,6 +1,6 @@
 class Admin::TheatersController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_theater, only: [:show, :edit, :update, :destroy]
+  before_action :set_theater, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @theaters = Theater.all
