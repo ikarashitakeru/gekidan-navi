@@ -27,16 +27,28 @@
           <div class="card shadow-sm border-0 mb-4">
             <div class="card-body p-4">
 
-              <!-- 仮の募集イメージ -->
-              <div class="bg-dark rounded d-flex align-items-center justify-content-center mb-4"
-                   style="height: 280px;">
+              <!-- 募集画像 -->
+              <% if @recruitment.image.attached? %>
 
-                <span class="text-white-50">
-                  募集イメージ
-                </span>
+                <%= image_tag @recruitment.image,
+                              class: "img-fluid rounded mb-4 w-100",
+                              style: "height: 280px; object-fit: cover;" %>
 
-              </div>
+              <% else %>
 
+                <div class="bg-dark rounded d-flex align-items-center justify-content-center mb-4"
+                     style="height: 280px;">
+
+                  <span class="text-white-50">
+                    募集イメージ未登録
+                  </span>
+
+                </div>
+
+              <% end %>
+
+
+              <!-- 募集内容 -->
               <h3 class="h5 fw-bold mb-3">
                 募集内容
               </h3>
@@ -61,7 +73,7 @@
         </div>
 
 
-        <!-- 右側：募集条件 -->
+        <!-- 右側：募集情報 -->
         <div class="col-12 col-lg-4">
 
           <div class="card shadow-sm border-0">
@@ -183,12 +195,13 @@
       </div>
 
 
-      <!-- 応募ボタン -->
+      <!-- 下部ボタン -->
       <div class="card shadow-sm border-0 mt-4">
         <div class="card-body p-4">
 
           <div class="d-grid d-md-flex gap-3 justify-content-md-center">
 
+            <!-- ユーザーでログインしている場合 -->
             <% if user_signed_in? && @recruitment.open? %>
 
               <% if current_user.applications.exists?(recruitment: @recruitment) %>
@@ -205,7 +218,9 @@
 
               <% end %>
 
-            <% elsif !user_signed_in? && @recruitment.open? %>
+
+            <!-- 誰もログインしていない場合 -->
+            <% elsif !user_signed_in? && !theater_signed_in? && !admin_signed_in? && @recruitment.open? %>
 
               <%= link_to "ログインして応募する",
                           new_user_session_path,
@@ -213,6 +228,8 @@
 
             <% end %>
 
+
+            <!-- 募集一覧へ戻る -->
             <%= link_to "募集一覧へ戻る",
                         public_recruitments_path,
                         class: "btn btn-outline-secondary px-4" %>

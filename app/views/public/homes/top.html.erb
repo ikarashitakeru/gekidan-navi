@@ -102,14 +102,26 @@
 
             <div class="card h-100 shadow-sm">
 
-              <div
-                class="bg-light d-flex align-items-center justify-content-center"
-                style="height: 160px;"
-              >
-                <span class="text-muted">
-                  募集イメージ
-                </span>
-              </div>
+              <!-- 募集画像 -->
+              <% if recruitment.image.attached? %>
+
+                <%= image_tag recruitment.image,
+                              class: "card-img-top",
+                              style: "height: 160px; object-fit: cover;" %>
+
+              <% else %>
+
+                <div
+                  class="bg-light d-flex align-items-center justify-content-center"
+                  style="height: 160px;"
+                >
+                  <span class="text-muted">
+                    募集イメージ未登録
+                  </span>
+                </div>
+
+              <% end %>
+
 
               <div class="card-body">
 
@@ -132,6 +144,7 @@
               </div>
 
             </div>
+
           </div>
 
         <% end %>

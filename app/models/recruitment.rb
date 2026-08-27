@@ -5,6 +5,8 @@ class Recruitment < ApplicationRecord
   has_many :applications, dependent: :destroy
   has_many :scouts, dependent: :destroy
 
+  has_one_attached :image
+
   enum :status, {
     open: 0,
     closed: 1
