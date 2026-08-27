@@ -1,0 +1,59 @@
+<div class="container py-5">
+  <h2 class="fw-bold mb-4">劇団情報編集</h2>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+
+      <% if @theater.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @theater.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: [:admin, @theater] do |f| %>
+
+        <div class="mb-3">
+          <%= f.label :name, "劇団名", class: "form-label" %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :email, "メールアドレス", class: "form-label" %>
+          <%= f.email_field :email, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :introduction, "劇団紹介", class: "form-label" %>
+          <%= f.text_area :introduction,
+                          rows: 5,
+                          class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :activity_area, "活動地域", class: "form-label" %>
+          <%= f.text_field :activity_area, class: "form-control" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :website_url, "Webサイト", class: "form-label" %>
+          <%= f.url_field :website_url, class: "form-control" %>
+        </div>
+
+        <div class="d-flex gap-3">
+          <%= f.submit "変更を保存",
+                       class: "btn btn-primary" %>
+
+          <%= link_to "劇団詳細に戻る",
+                      admin_theater_path(@theater),
+                      class: "btn btn-outline-secondary" %>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

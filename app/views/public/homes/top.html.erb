@@ -1,57 +1,151 @@
 <div class="container py-4 py-md-5">
-  <div class="text-center mb-4 mb-md-5">
-    <h1 class="fw-bold mb-3">劇団ナビ</h1>
 
-    <p class="text-muted mb-0">
-      あなたに合った劇団・募集を探してみましょう
-    </p>
-  </div>
+  <!-- ヒーローエリア -->
+  <section class="mb-5">
+    <div
+      class="position-relative overflow-hidden rounded shadow-sm"
+      style="
+        min-height: 390px;
+        background-image:
+          linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.88) 0%,
+            rgba(0, 0, 0, 0.72) 45%,
+            rgba(0, 0, 0, 0.20) 100%
+          ),
+          url('<%= asset_path("hero_stage.png") %>');
+        background-size: cover;
+        background-position: center;
+      "
+    >
 
-  <div class="row justify-content-center">
-    <div class="col-12 col-lg-8">
+      <div class="row min-vh-0">
+        <div class="col-12 col-lg-8">
 
-      <div class="card shadow-sm border-0">
-        <div class="card-body p-3 p-md-4">
+          <div class="p-4 p-md-5 text-white d-flex flex-column justify-content-center"
+               style="min-height: 390px;">
 
-          <h2 class="h4 fw-bold mb-4">
-            劇団を探す
-          </h2>
+            <p class="mb-2 text-white-50">
+              劇団・出演者募集マッチングサービス
+            </p>
 
-          <%= form_with url: public_recruitments_path,
-                        method: :get,
-                        local: true do |f| %>
+            <h1 class="display-5 fw-bold mb-3">
+              あなたの情熱が、<br>
+              舞台に立つきっかけになる。
+            </h1>
 
-            <div class="mb-3">
-              <%= f.label :keyword,
-                          "劇団名・キーワード",
-                          class: "form-label" %>
+            <p class="mb-4">
+              劇団と出演希望者をつなぐ、劇団員募集サービスです。
+            </p>
 
-              <%= f.text_field :keyword,
-                               class: "form-control",
-                               placeholder: "例：ミュージカル、ダンス" %>
-            </div>
+            <%= form_with url: public_recruitments_path,
+                          method: :get,
+                          local: true do |f| %>
 
-            <div class="mb-4">
-              <%= f.label :area,
-                          "活動地域",
-                          class: "form-label" %>
+              <div class="row g-2">
 
-              <%= f.select :area,
-                           ["東京都", "神奈川県", "大阪府", "京都府", "新潟県"],
-                           { include_blank: "地域を選択" },
-                           class: "form-select" %>
-            </div>
+                <div class="col-12 col-md-5">
+                  <%= f.text_field :keyword,
+                                   class: "form-control form-control-lg",
+                                   placeholder: "キーワード・劇団名など" %>
+                </div>
 
-            <div class="d-grid d-md-flex justify-content-md-end">
-              <%= f.submit "検索",
-                           class: "btn btn-primary px-md-4" %>
-            </div>
+                <div class="col-12 col-md-4">
+                  <%= f.select :area,
+                               ["東京都", "神奈川県", "大阪府", "京都府", "新潟県"],
+                               { include_blank: "活動地域を選択" },
+                               class: "form-select form-select-lg" %>
+                </div>
 
-          <% end %>
+                <div class="col-12 col-md-3 d-grid">
+                  <%= f.submit "検索する",
+                               class: "btn btn-primary btn-lg" %>
+                </div>
 
+              </div>
+
+            <% end %>
+
+          </div>
         </div>
       </div>
 
     </div>
-  </div>
+  </section>
+
+
+  <!-- 新着募集 -->
+  <section>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+      <h2 class="h4 fw-bold mb-0">
+        新着の募集
+      </h2>
+
+      <%= link_to "すべて見る",
+                  public_recruitments_path,
+                  class: "text-decoration-none" %>
+
+    </div>
+
+    <% if Recruitment.exists? %>
+
+      <div class="row g-4">
+
+        <% Recruitment.includes(:theater)
+                      .order(created_at: :desc)
+                      .limit(3)
+                      .each do |recruitment| %>
+
+          <div class="col-12 col-md-4">
+
+            <div class="card h-100 shadow-sm">
+
+              <div
+                class="bg-light d-flex align-items-center justify-content-center"
+                style="height: 160px;"
+              >
+                <span class="text-muted">
+                  募集イメージ
+                </span>
+              </div>
+
+              <div class="card-body">
+
+                <h3 class="h6 fw-bold mb-2">
+                  <%= recruitment.title %>
+                </h3>
+
+                <p class="text-muted small mb-2">
+                  <%= recruitment.theater.name %>
+                </p>
+
+                <p class="small mb-3">
+                  <%= recruitment.activity_area %>
+                </p>
+
+                <%= link_to "詳細を見る",
+                            public_recruitment_path(recruitment),
+                            class: "btn btn-outline-primary btn-sm" %>
+
+              </div>
+
+            </div>
+          </div>
+
+        <% end %>
+
+      </div>
+
+    <% else %>
+
+      <div class="alert alert-light border">
+        現在、新着募集はありません。
+      </div>
+
+    <% end %>
+
+  </section>
+
 </div>

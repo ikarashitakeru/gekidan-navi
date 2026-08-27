@@ -29,6 +29,17 @@
             </div>
 
             <div class="mb-3">
+              <%= f.label :genre_id, "ジャンル", class: "form-label" %>
+
+              <%= f.collection_select :genre_id,
+                                      Genre.order(:name),
+                                      :id,
+                                      :name,
+                                      { prompt: "ジャンルを選択してください" },
+                                      { class: "form-select" } %>
+            </div>
+
+            <div class="mb-3">
               <%= f.label :capacity, "募集人数", class: "form-label" %>
               <%= f.number_field :capacity,
                                  min: 1,
@@ -51,6 +62,7 @@
 
             <div class="mb-4">
               <%= f.label :status, "募集状態", class: "form-label" %>
+
               <%= f.select :status,
                            [["募集中", "open"], ["募集終了", "closed"]],
                            {},

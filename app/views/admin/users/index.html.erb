@@ -1,0 +1,40 @@
+<div class="container py-5">
+  <h2 class="fw-bold mb-4">会員一覧</h2>
+
+  <% if @users.any? %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>会員ID</th>
+            <th>氏名</th>
+            <th>メールアドレス</th>
+            <th>希望地域</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.preferred_area.presence || "未登録" %></td>
+              <td>
+                <%= link_to "詳細",
+                            admin_user_path(user),
+                            class: "btn btn-outline-primary btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  <% else %>
+    <div class="alert alert-light border">
+      登録されている会員はいません。
+    </div>
+  <% end %>
+</div>

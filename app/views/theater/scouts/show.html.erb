@@ -1,0 +1,84 @@
+<div class="container py-4 py-md-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+
+      <div class="mb-3">
+        <%= link_to "← スカウト一覧に戻る",
+                    theater_scouts_path,
+                    class: "text-decoration-none" %>
+      </div>
+
+      <div class="mb-4">
+        <h2 class="fw-bold mb-1">スカウト詳細</h2>
+        <p class="text-muted mb-0">
+          送信したスカウトの内容を確認できます。
+        </p>
+      </div>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+          <div class="mb-4">
+            <span class="text-muted small">送信先ユーザー</span>
+            <h3 class="h5 fw-bold mb-0">
+              <%= @scout.user.name %>
+            </h3>
+          </div>
+
+          <hr>
+
+          <div class="mb-4">
+            <strong>案内した募集</strong>
+            <p class="mt-1 mb-0">
+              <%= @scout.recruitment.title %>
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <strong>メッセージ</strong>
+
+            <div class="bg-light rounded p-3 mt-2">
+              <%= simple_format(@scout.message) %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <strong>スカウト状況</strong>
+
+            <div class="mt-2">
+              <% case @scout.status %>
+              <% when "sent" %>
+                <span class="badge bg-secondary">送信済み</span>
+              <% when "accepted" %>
+                <span class="badge bg-success">承諾</span>
+              <% when "declined" %>
+                <span class="badge bg-danger">辞退</span>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <strong>送信日</strong>
+            <p class="mt-1 mb-0">
+              <%= @scout.created_at.strftime("%Y年%m月%d日") %>
+            </p>
+          </div>
+
+          <hr>
+
+          <div class="d-flex gap-2">
+            <%= link_to "スカウト一覧へ",
+                        theater_scouts_path,
+                        class: "btn btn-primary" %>
+
+            <%= link_to "ユーザープロフィールを見る",
+                        theater_user_path(@scout.user),
+                        class: "btn btn-outline-secondary" %>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

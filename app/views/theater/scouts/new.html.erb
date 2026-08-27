@@ -1,0 +1,119 @@
+<div class="container py-4 py-md-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-xl-9">
+
+      <div class="mb-4">
+        <h2 class="fw-bold mb-1">
+          スカウトを送る
+        </h2>
+
+        <p class="text-muted mb-0">
+          ユーザーに募集への参加を案内します。
+        </p>
+      </div>
+
+      <div class="row g-4">
+
+        <!-- 左側：ユーザー情報 -->
+        <div class="col-12 col-lg-4">
+
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-4 text-center">
+
+              <div class="bg-light border rounded-circle
+                          d-flex align-items-center justify-content-center
+                          mx-auto mb-3"
+                   style="width: 100px; height: 100px;">
+
+                <span class="text-muted small">
+                  プロフィール
+                </span>
+
+              </div>
+
+              <h3 class="h5 fw-bold mb-2">
+                <%= @user.name %>
+              </h3>
+
+              <p class="text-muted mb-2">
+                希望地域：
+                <%= @user.preferred_area.presence || "未登録" %>
+              </p>
+
+              <%= link_to "プロフィールを見る",
+                          theater_user_path(@user),
+                          class: "btn btn-outline-secondary btn-sm" %>
+
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- 右側：スカウトフォーム -->
+        <div class="col-12 col-lg-8">
+
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+
+              <% if @scout.errors.any? %>
+                <div class="alert alert-danger">
+                  <ul class="mb-0">
+                    <% @scout.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <%= form_with model: @scout,
+                            url: theater_user_scouts_path(@user),
+                            local: true do |f| %>
+
+                <div class="mb-4">
+                  <%= f.label :recruitment_id,
+                              "案内する募集",
+                              class: "form-label fw-bold" %>
+
+                  <%= f.collection_select :recruitment_id,
+                                          @recruitments,
+                                          :id,
+                                          :title,
+                                          { include_blank: "募集を選択してください" },
+                                          class: "form-select" %>
+                </div>
+
+                <div class="mb-4">
+                  <%= f.label :message,
+                              "メッセージ",
+                              class: "form-label fw-bold" %>
+
+                  <%= f.text_area :message,
+                                  rows: 8,
+                                  class: "form-control",
+                                  placeholder: "プロフィールを拝見し、ぜひ当劇団の募集にご参加いただきたいと思いご連絡しました。" %>
+                </div>
+
+                <div class="d-flex gap-2">
+
+                  <%= f.submit "スカウトを送信",
+                               class: "btn btn-primary px-4" %>
+
+                  <%= link_to "戻る",
+                              theater_user_path(@user),
+                              class: "btn btn-outline-secondary px-4" %>
+
+                </div>
+
+              <% end %>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

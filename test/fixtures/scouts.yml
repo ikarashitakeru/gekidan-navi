@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  theater: one
+  user: one
+  recruitment: one
+  message: MyText
+  status: 1
+
+two:
+  theater: two
+  user: two
+  recruitment: two
+  message: MyText
+  status: 1

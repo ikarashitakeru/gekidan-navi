@@ -1,61 +1,262 @@
 <div class="container py-4 py-md-5">
 
-  <h2 class="fw-bold mb-4">募集を探す</h2>
+  <div class="row g-4">
 
-  <% if @recruitments.any? %>
+    <!-- 左側：検索条件 -->
+    <div class="col-12 col-lg-3">
 
-    <div class="row g-3">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
 
-      <% @recruitments.each do |recruitment| %>
-        <div class="col-12">
+          <h2 class="h5 fw-bold mb-4">
+            検索条件
+          </h2>
 
-          <div class="card shadow-sm h-100">
-            <div class="card-body p-3 p-md-4">
+          <%= form_with url: public_recruitments_path,
+                        method: :get,
+                        local: true do |f| %>
 
-              <h4 class="fw-bold mb-3">
-                <%= recruitment.title %>
-              </h4>
+            <!-- キーワード -->
+            <div class="mb-4">
 
-              <p class="mb-1">
-                <strong>劇団名：</strong>
-                <%= recruitment.theater.name %>
-              </p>
+              <%= f.label :keyword,
+                          "キーワード",
+                          class: "form-label fw-bold" %>
 
-              <p class="mb-1">
-                <strong>活動地域：</strong>
-                <%= recruitment.activity_area %>
-              </p>
-
-              <p class="mb-1">
-                <strong>募集人数：</strong>
-                <%= recruitment.capacity %>人
-              </p>
-
-              <p class="mb-4">
-                <strong>応募締切：</strong>
-                <%= recruitment.deadline %>
-              </p>
-
-              <div class="d-grid d-md-block">
-                <%= link_to "募集詳細を見る",
-                            public_recruitment_path(recruitment),
-                            class: "btn btn-outline-primary" %>
-              </div>
+              <%= f.text_field :keyword,
+                               value: params[:keyword],
+                               class: "form-control",
+                               placeholder: "劇団名・募集名など" %>
 
             </div>
+
+
+            <!-- 活動地域 -->
+            <div class="mb-4">
+
+              <%= f.label :area,
+                          "活動地域",
+                          class: "form-label fw-bold" %>
+
+              <%= f.select :area,
+                           [
+                             "東京都",
+                             "神奈川県",
+                             "千葉県",
+                             "埼玉県",
+                             "大阪府",
+                             "京都府",
+                             "兵庫県",
+                             "新潟県"
+                           ],
+                           {
+                             include_blank: "すべて",
+                             selected: params[:area]
+                           },
+                           class: "form-select" %>
+
+            </div>
+
+
+            <!-- ジャンル -->
+            <div class="mb-4">
+
+              <%= f.label :genre_id,
+                          "ジャンル",
+                          class: "form-label fw-bold" %>
+
+              <%= f.select :genre_id,
+                           options_from_collection_for_select(
+                             @genres,
+                             :id,
+                             :name,
+                             params[:genre_id]
+                           ),
+                           {
+                             include_blank: "すべて"
+                           },
+                           class: "form-select" %>
+
+            </div>
+
+
+            <!-- 検索ボタン -->
+            <div class="d-grid mb-3">
+
+              <%= f.submit "検索する",
+                           class: "btn btn-primary" %>
+
+            </div>
+
+
+            <!-- 条件クリア -->
+            <div class="text-center">
+
+              <%= link_to "条件をクリア",
+                          public_recruitments_path,
+                          class: "text-decoration-none small text-muted" %>
+
+            </div>
+
+          <% end %>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- 右側：検索結果 -->
+    <div class="col-12 col-lg-9">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+          <h2 class="fw-bold mb-1">
+            募集一覧
+          </h2>
+
+          <p class="text-muted mb-0">
+            検索結果：
+            <strong><%= @recruitments.size %></strong>
+            件
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <% if @recruitments.any? %>
+
+        <div class="d-flex flex-column gap-3">
+
+          <% @recruitments.each do |recruitment| %>
+
+            <div class="card shadow-sm border-0">
+
+              <div class="card-body p-4">
+
+                <div class="row align-items-center g-3">
+
+                  <!-- 募集情報 -->
+                  <div class="col-12 col-md-9">
+
+                    <!-- タイトル -->
+                    <h3 class="h5 fw-bold mb-3">
+
+                      <%= link_to recruitment.title.presence || "タイトル未登録",
+                                  public_recruitment_path(recruitment),
+                                  class: "text-dark text-decoration-none" %>
+
+                    </h3>
+
+
+                    <!-- 劇団名 -->
+                    <p class="mb-2 text-muted">
+
+                      <strong class="text-dark">
+                        劇団名：
+                      </strong>
+
+                      <%= recruitment.theater.name %>
+
+                    </p>
+
+
+                    <!-- ジャンル -->
+                    <p class="mb-2">
+
+                      <strong>
+                        ジャンル：
+                      </strong>
+
+                      <%= recruitment.genre&.name || "未登録" %>
+
+                    </p>
+
+
+                    <!-- 地域・人数 -->
+                    <div class="d-flex flex-wrap gap-3 mb-2">
+
+                      <span>
+                        <strong>活動地域：</strong>
+
+                        <%= recruitment.activity_area.presence || "未登録" %>
+                      </span>
+
+                      <span>
+                        <strong>募集人数：</strong>
+
+                        <% if recruitment.capacity.present? %>
+                          <%= recruitment.capacity %>人
+                        <% else %>
+                          未登録
+                        <% end %>
+                      </span>
+
+                    </div>
+
+
+                    <!-- 応募締切 -->
+                    <p class="mb-0">
+
+                      <strong>
+                        応募締切：
+                      </strong>
+
+                      <%= recruitment.deadline || "未登録" %>
+
+                    </p>
+
+                  </div>
+
+
+                  <!-- 詳細ボタン -->
+                  <div class="col-12 col-md-3 text-md-end">
+
+                    <%= link_to "詳細を見る",
+                                public_recruitment_path(recruitment),
+                                class: "btn btn-outline-primary px-4" %>
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          <% end %>
+
+        </div>
+
+      <% else %>
+
+        <div class="card border-0 shadow-sm">
+
+          <div class="card-body text-center py-5">
+
+            <h3 class="h5 fw-bold mb-3">
+              募集が見つかりませんでした
+            </h3>
+
+            <p class="text-muted mb-4">
+              検索条件を変更して、もう一度検索してみてください。
+            </p>
+
+            <%= link_to "検索条件をリセット",
+                        public_recruitments_path,
+                        class: "btn btn-outline-primary" %>
+
           </div>
 
         </div>
+
       <% end %>
 
     </div>
 
-  <% else %>
-
-    <div class="alert alert-light border">
-      現在募集中の募集はありません。
-    </div>
-
-  <% end %>
+  </div>
 
 </div>

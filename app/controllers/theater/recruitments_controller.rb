@@ -53,6 +53,7 @@ class Theater::RecruitmentsController < ApplicationController
     params.require(:recruitment).permit(
       :title,
       :description,
+      :genre_id,
       :capacity,
       :deadline,
       :activity_area,

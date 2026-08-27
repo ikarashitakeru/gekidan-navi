@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_21_091542) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_27_134213) do
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
   create_table "applications", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "recruitment_id"
@@ -20,6 +32,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_21_091542) do
     t.datetime "updated_at", null: false
     t.index ["recruitment_id"], name: "index_applications_on_recruitment_id"
     t.index ["user_id"], name: "index_applications_on_user_id"
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "recruitments", force: :cascade do |t|
@@ -32,7 +50,22 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_21_091542) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "genre_id"
+    t.index ["genre_id"], name: "index_recruitments_on_genre_id"
     t.index ["theater_id"], name: "index_recruitments_on_theater_id"
+  end
+
+  create_table "scouts", force: :cascade do |t|
+    t.integer "theater_id", null: false
+    t.integer "user_id", null: false
+    t.integer "recruitment_id", null: false
+    t.text "message"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recruitment_id"], name: "index_scouts_on_recruitment_id"
+    t.index ["theater_id"], name: "index_scouts_on_theater_id"
+    t.index ["user_id"], name: "index_scouts_on_user_id"
   end
 
   create_table "theaters", force: :cascade do |t|
@@ -65,11 +98,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_21_091542) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_active", default: true, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "applications", "recruitments"
   add_foreign_key "applications", "users"
+  add_foreign_key "recruitments", "genres"
   add_foreign_key "recruitments", "theaters"
+  add_foreign_key "scouts", "recruitments"
+  add_foreign_key "scouts", "theaters"
+  add_foreign_key "scouts", "users"
 end

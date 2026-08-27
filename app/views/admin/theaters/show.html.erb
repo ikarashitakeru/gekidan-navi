@@ -1,0 +1,56 @@
+<div class="container py-5">
+  <h2 class="fw-bold mb-4">劇団詳細</h2>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+
+      <table class="table">
+        <tbody>
+          <tr>
+            <th style="width: 30%;">劇団ID</th>
+            <td><%= @theater.id %></td>
+          </tr>
+
+          <tr>
+            <th>劇団名</th>
+            <td><%= @theater.name %></td>
+          </tr>
+
+          <tr>
+            <th>メールアドレス</th>
+            <td><%= @theater.email %></td>
+          </tr>
+
+          <tr>
+            <th>紹介文</th>
+            <td><%= @theater.introduction.presence || "未登録" %></td>
+          </tr>
+
+          <tr>
+            <th>活動地域</th>
+            <td><%= @theater.activity_area.presence || "未登録" %></td>
+          </tr>
+
+          <tr>
+            <th>Webサイト</th>
+            <td>
+              <% if @theater.website_url.present? %>
+                <%= link_to @theater.website_url,
+                            @theater.website_url,
+                            target: "_blank",
+                            rel: "noopener" %>
+              <% else %>
+                未登録
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <%= link_to "劇団一覧に戻る",
+                  admin_theaters_path,
+                  class: "btn btn-outline-secondary" %>
+
+    </div>
+  </div>
+</div>
