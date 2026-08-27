@@ -1,59 +1,105 @@
-<div class="container py-5">
+<div class="container py-4 py-md-5">
+
   <div class="row justify-content-center">
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-xl-9">
 
-      <div class="card shadow-sm">
-        <div class="card-body p-4">
+      <div class="mb-4">
+        <h2 class="fw-bold mb-1">
+          劇団プロフィール編集
+        </h2>
 
-          <h2 class="fw-bold mb-4">
-            劇団情報編集
-          </h2>
+        <p class="text-muted mb-0">
+          劇団の基本情報や活動内容を編集できます。
+        </p>
+      </div>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 p-md-5">
 
           <%= form_with model: @theater,
                         url: theater_theater_path,
                         method: :patch,
                         local: true do |f| %>
 
-            <div class="mb-3">
-              <%= f.label :name, "劇団名", class: "form-label" %>
-              <%= f.text_field :name, class: "form-control" %>
-            </div>
-
-            <div class="mb-3">
-              <%= f.label :introduction, "劇団紹介", class: "form-label" %>
-              <%= f.text_area :introduction,
-                              rows: 5,
-                              class: "form-control",
-                              placeholder: "劇団の特徴や活動内容を入力してください" %>
-            </div>
-
-            <div class="mb-3">
-              <%= f.label :activity_area, "活動地域", class: "form-label" %>
-              <%= f.text_field :activity_area,
-                               class: "form-control",
-                               placeholder: "例：東京都" %>
-            </div>
-
+            <!-- 劇団名 -->
             <div class="mb-4">
-              <%= f.label :website_url, "ホームページURL", class: "form-label" %>
+              <%= f.label :name,
+                          "劇団名",
+                          class: "form-label fw-bold" %>
+
+              <%= f.text_field :name,
+                               class: "form-control",
+                               placeholder: "例：劇団サンプル" %>
+            </div>
+
+            <!-- 劇団紹介 -->
+            <div class="mb-4">
+              <%= f.label :introduction,
+                          "劇団紹介",
+                          class: "form-label fw-bold" %>
+
+              <%= f.text_area :introduction,
+                              rows: 6,
+                              class: "form-control",
+                              placeholder: "劇団の特徴や活動内容、どんな作品を上演しているかなどを入力してください" %>
+            </div>
+
+            <!-- 活動地域 -->
+            <div class="mb-4">
+              <%= f.label :activity_area,
+                          "活動地域",
+                          class: "form-label fw-bold" %>
+
+              <%= f.select :activity_area,
+                           [
+                             "東京都",
+                             "神奈川県",
+                             "千葉県",
+                             "埼玉県",
+                             "大阪府",
+                             "京都府",
+                             "兵庫県",
+                             "新潟県"
+                           ],
+                           {
+                             include_blank: "活動地域を選択"
+                           },
+                           class: "form-select" %>
+            </div>
+
+            <!-- ホームページURL -->
+            <div class="mb-4">
+              <%= f.label :website_url,
+                          "ホームページURL",
+                          class: "form-label fw-bold" %>
+
               <%= f.url_field :website_url,
                               class: "form-control",
                               placeholder: "https://example.com" %>
+
+              <div class="form-text">
+                劇団の公式サイトやSNSなどがあれば入力してください。
+              </div>
             </div>
 
-            <div class="d-flex gap-3">
-              <%= f.submit "変更を保存",
-                           class: "btn btn-primary" %>
+            <!-- ボタン -->
+            <div class="d-grid d-md-flex gap-2">
 
-              <%= link_to "戻る",
+              <%= f.submit "変更を保存",
+                           class: "btn btn-primary px-4" %>
+
+              <%= link_to "劇団プロフィールに戻る",
                           theater_theater_path,
-                          class: "btn btn-outline-secondary" %>
+                          class: "btn btn-outline-secondary px-4" %>
+
             </div>
 
           <% end %>
 
         </div>
       </div>
+
     </div>
   </div>
+
 </div>

@@ -1,0 +1,121 @@
+<div class="container py-4 py-md-5">
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-xl-10">
+
+      <div class="mb-4">
+        <h2 class="fw-bold mb-1">
+          スカウト一覧
+        </h2>
+
+        <p class="text-muted mb-0">
+          劇団から届いたスカウトを確認できます。
+        </p>
+      </div>
+
+      <% if @scouts.any? %>
+
+        <div class="card shadow-sm border-0">
+          <div class="card-body p-0">
+
+            <% @scouts.each do |scout| %>
+
+              <div class="p-4 border-bottom">
+
+                <div class="row align-items-center g-3">
+
+                  <div class="col-12 col-md-2">
+
+                    <div class="bg-light border rounded-circle
+                                d-flex align-items-center justify-content-center"
+                         style="width: 80px; height: 80px;">
+
+                      <span class="text-muted small">
+                        劇団
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-12 col-md-7">
+
+                    <h3 class="h5 fw-bold mb-2">
+                      <%= scout.theater.name %>
+                    </h3>
+
+                    <p class="mb-1">
+                      <strong>募集：</strong>
+                      <%= scout.recruitment.title %>
+                    </p>
+
+                    <p class="small text-muted mb-0">
+                      受信日：
+                      <%= scout.created_at.strftime("%Y年%m月%d日") %>
+                    </p>
+
+                  </div>
+
+                  <div class="col-12 col-md-3 text-md-end">
+
+                    <div class="mb-3">
+
+                      <% if scout.sent? %>
+
+                        <span class="badge text-bg-secondary">
+                          未回答
+                        </span>
+
+                      <% elsif scout.accepted? %>
+
+                        <span class="badge text-bg-success">
+                          承諾済み
+                        </span>
+
+                      <% elsif scout.declined? %>
+
+                        <span class="badge text-bg-danger">
+                          辞退済み
+                        </span>
+
+                      <% end %>
+
+                    </div>
+
+                    <%= link_to "詳細を見る",
+                                public_scout_path(scout),
+                                class: "btn btn-outline-primary btn-sm" %>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            <% end %>
+
+          </div>
+        </div>
+
+      <% else %>
+
+        <div class="card shadow-sm border-0">
+          <div class="card-body text-center py-5">
+
+            <h3 class="h5 fw-bold mb-3">
+              まだスカウトは届いていません
+            </h3>
+
+            <p class="text-muted mb-0">
+              劇団からスカウトが届くと、ここに表示されます。
+            </p>
+
+          </div>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

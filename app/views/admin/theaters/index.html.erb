@@ -1,0 +1,63 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">劇団一覧</h2>
+  </div>
+
+  <% if notice.present? %>
+    <div class="alert alert-success">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <% if @theaters.any? %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>劇団ID</th>
+            <th>劇団名</th>
+            <th>メールアドレス</th>
+            <th>活動地域</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @theaters.each do |theater| %>
+            <tr>
+              <td><%= theater.id %></td>
+              <td><%= theater.name %></td>
+              <td><%= theater.email %></td>
+              <td><%= theater.activity_area.presence || "未登録" %></td>
+
+              <td>
+                <div class="d-flex gap-2">
+                  <%= link_to "詳細",
+                              admin_theater_path(theater),
+                              class: "btn btn-outline-primary btn-sm" %>
+
+                  <%= link_to "編集",
+                              edit_admin_theater_path(theater),
+                              class: "btn btn-outline-secondary btn-sm" %>
+
+                  <%= button_to "削除",
+                                admin_theater_path(theater),
+                                method: :delete,
+                                data: {
+                                  turbo_confirm: "この劇団を削除しますか？"
+                                },
+                                class: "btn btn-outline-danger btn-sm" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  <% else %>
+    <div class="alert alert-light border">
+      登録されている劇団はありません。
+    </div>
+  <% end %>
+</div>

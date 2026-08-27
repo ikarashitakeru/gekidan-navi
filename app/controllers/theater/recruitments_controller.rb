@@ -1,6 +1,6 @@
 class Theater::RecruitmentsController < ApplicationController
   before_action :authenticate_theater!
-  before_action :set_recruitment, only: [:show, :edit, :update, :destroy]
+  before_action :set_recruitment, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @recruitments = current_theater.recruitments.order(created_at: :desc)
@@ -53,6 +53,7 @@ class Theater::RecruitmentsController < ApplicationController
     params.require(:recruitment).permit(
       :title,
       :description,
+      :genre_id,
       :capacity,
       :deadline,
       :activity_area,

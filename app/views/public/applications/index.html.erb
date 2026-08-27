@@ -1,68 +1,121 @@
 <div class="container py-4 py-md-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-xl-10">
 
-  <h2 class="fw-bold mb-4">
-    応募履歴
-  </h2>
+      <div class="mb-4">
+        <h2 class="fw-bold mb-1">応募履歴</h2>
 
-  <% if @applications.any? %>
+        <p class="text-muted mb-0">
+          これまで応募した募集と選考状況を確認できます。
+        </p>
+      </div>
 
-    <div class="row g-3">
+      <% if @applications.any? %>
 
-      <% @applications.each do |application| %>
-        <div class="col-12">
+        <div class="card shadow-sm border-0">
+          <div class="card-body p-0">
 
-          <div class="card shadow-sm h-100">
-            <div class="card-body p-3 p-md-4">
+            <% @applications.each do |application| %>
 
-              <h4 class="fw-bold mb-3">
-                <%= application.recruitment.title %>
-              </h4>
+              <div class="p-4 border-bottom">
+                <div class="row align-items-center g-3">
 
-              <p class="mb-1">
-                <strong>劇団名：</strong>
-                <%= application.recruitment.theater.name %>
-              </p>
+                  <!-- 左：募集イメージ -->
+                  <div class="col-12 col-md-2">
+                    <div
+                      class="bg-dark rounded d-flex align-items-center justify-content-center"
+                      style="height: 90px;"
+                    >
+                      <span class="text-white-50 small">
+                        募集イメージ
+                      </span>
+                    </div>
+                  </div>
 
-              <p class="mb-1">
-                <strong>応募日：</strong>
-                <%= application.created_at.strftime("%Y年%m月%d日") %>
-              </p>
+                  <!-- 中央：募集情報 -->
+                  <div class="col-12 col-md-7">
+                    <h3 class="h5 fw-bold mb-2">
+                      <%= application.recruitment.title %>
+                    </h3>
 
-              <p class="mb-3">
-                <strong>選考状況：</strong>
+                    <p class="text-muted mb-1">
+                      <%= application.recruitment.theater.name %>
+                    </p>
 
-                <% case application.selection_status %>
-                <% when "applied" %>
-                  応募済み
-                <% when "screening" %>
-                  選考中
-                <% when "accepted" %>
-                  合格
-                <% when "rejected" %>
-                  不合格
-                <% end %>
-              </p>
+                    <p class="small mb-0">
+                      応募日：
+                      <%= application.created_at.strftime("%Y年%m月%d日") %>
+                    </p>
+                  </div>
 
-              <div class="d-grid d-md-block">
-                <%= link_to "詳細を見る",
-                            public_application_path(application),
-                            class: "btn btn-outline-primary" %>
+                  <!-- 右：選考状況 -->
+                  <div class="col-12 col-md-3 text-md-end">
+
+                    <div class="mb-3">
+                      <% case application.selection_status %>
+                      <% when "applied" %>
+                        <span class="badge text-bg-secondary">
+                          応募済み
+                        </span>
+
+                      <% when "screening" %>
+                        <span class="badge text-bg-warning">
+                          選考中
+                        </span>
+
+                      <% when "accepted" %>
+                        <span class="badge text-bg-success">
+                          合格
+                        </span>
+
+                      <% when "rejected" %>
+                        <span class="badge text-bg-danger">
+                          不合格
+                        </span>
+
+                      <% else %>
+                        <span class="badge text-bg-secondary">
+                          状況未設定
+                        </span>
+                      <% end %>
+                    </div>
+
+                    <%= link_to "詳細を見る",
+                                public_application_path(application),
+                                class: "btn btn-outline-primary btn-sm" %>
+
+                  </div>
+
+                </div>
               </div>
 
-            </div>
-          </div>
+            <% end %>
 
+          </div>
         </div>
+
+      <% else %>
+
+        <div class="card shadow-sm border-0">
+          <div class="card-body text-center py-5">
+
+            <h3 class="h5 fw-bold mb-3">
+              まだ応募履歴はありません
+            </h3>
+
+            <p class="text-muted mb-4">
+              気になる募集を探して応募してみましょう。
+            </p>
+
+            <%= link_to "募集を探す",
+                        public_recruitments_path,
+                        class: "btn btn-primary" %>
+
+          </div>
+        </div>
+
       <% end %>
 
     </div>
-
-  <% else %>
-
-    <div class="alert alert-light border">
-      まだ応募履歴はありません。
-    </div>
-
-  <% end %>
-
+  </div>
 </div>

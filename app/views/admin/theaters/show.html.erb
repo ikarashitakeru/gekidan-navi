@@ -1,0 +1,110 @@
+<div class="container py-4 py-md-5">
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+
+      <div class="mb-3">
+        <%= link_to "← 劇団一覧に戻る",
+                    admin_theaters_path,
+                    class: "text-decoration-none" %>
+      </div>
+
+      <div class="mb-4">
+        <h2 class="fw-bold mb-1">
+          劇団詳細
+        </h2>
+
+        <p class="text-muted mb-0">
+          登録されている劇団の情報を確認できます。
+        </p>
+      </div>
+
+      <% if notice.present? %>
+        <div class="alert alert-success">
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+          <div class="mb-4">
+            <p class="text-muted small mb-1">
+              劇団名
+            </p>
+
+            <h3 class="h4 fw-bold mb-0">
+              <%= @theater.name %>
+            </h3>
+          </div>
+
+          <hr>
+
+          <div class="mb-4">
+            <h4 class="h6 fw-bold mb-2">
+              メールアドレス
+            </h4>
+
+            <p class="mb-0">
+              <%= @theater.email %>
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h4 class="h6 fw-bold mb-2">
+              劇団紹介
+            </h4>
+
+            <p class="mb-0">
+              <%= @theater.introduction.presence || "未登録" %>
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h4 class="h6 fw-bold mb-2">
+              活動地域
+            </h4>
+
+            <p class="mb-0">
+              <%= @theater.activity_area.presence || "未登録" %>
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h4 class="h6 fw-bold mb-2">
+              Webサイト
+            </h4>
+
+            <% website_url = @theater.website_url.to_s %>
+
+            <% if website_url.match?(/\Ahttps?:\/\/[^\s]+\z/i) %>
+              <%= link_to website_url,
+                          website_url,
+                          target: "_blank",
+                          rel: "noopener noreferrer" %>
+            <% else %>
+              <p class="mb-0">
+                <%= website_url.presence || "未登録" %>
+              </p>
+            <% end %>
+          </div>
+
+          <hr>
+
+          <div class="d-flex gap-2">
+            <%= link_to "編集",
+                        edit_admin_theater_path(@theater),
+                        class: "btn btn-primary" %>
+
+            <%= link_to "劇団一覧へ戻る",
+                        admin_theaters_path,
+                        class: "btn btn-outline-secondary" %>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

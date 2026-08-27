@@ -1,44 +1,229 @@
-<div class="container py-5">
-  <div class="text-center mb-5">
-    <h1 class="fw-bold">劇団マイページ</h1>
-    <p class="text-muted">募集管理・応募者管理・スカウト送信を行います</p>
+<div class="container py-4 py-md-5">
+
+  <div class="mb-4">
+    <h1 class="fw-bold mb-1">劇団マイページ</h1>
+    <p class="text-muted mb-0">
+      募集や応募者の状況を確認できます。
+    </p>
   </div>
 
-  <div class="row g-4">
+  <!-- 集計カード -->
+  <div class="row g-4 mb-5">
+
     <div class="col-12 col-md-4">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body text-center">
-          <h2 class="h5 fw-bold">募集管理</h2>
-          <p class="text-muted">募集の作成・編集・確認を行います。</p>
-          <button class="btn btn-outline-primary" disabled>
-            募集一覧
-          </button>
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body text-center p-4">
+          <p class="text-muted mb-2">募集中の募集</p>
+
+          <div class="display-6 fw-bold mb-2">
+            <%= current_theater.recruitments.where(status: 0).count %>
+          </div>
+
+          <p class="text-muted small mb-0">
+            件
+          </p>
         </div>
       </div>
     </div>
 
     <div class="col-12 col-md-4">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body text-center">
-          <h2 class="h5 fw-bold">応募者管理</h2>
-          <p class="text-muted">応募者の確認や選考状況を管理します。</p>
-          <button class="btn btn-outline-primary" disabled>
-            応募者一覧
-          </button>
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body text-center p-4">
+          <p class="text-muted mb-2">応募者数</p>
+
+          <div class="display-6 fw-bold mb-2">
+            <%= Application.joins(:recruitment)
+                           .where(recruitments: { theater_id: current_theater.id })
+                           .count %>
+          </div>
+
+          <p class="text-muted small mb-0">
+            人
+          </p>
         </div>
       </div>
     </div>
 
     <div class="col-12 col-md-4">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body text-center">
-          <h2 class="h5 fw-bold">スカウト</h2>
-          <p class="text-muted">条件に合うユーザーへスカウトを送ります。</p>
-          <button class="btn btn-outline-primary" disabled>
-            スカウト管理
-          </button>
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body text-center p-4">
+          <p class="text-muted mb-2">スカウト送信数</p>
+
+          <div class="display-6 fw-bold mb-2">
+            <%= current_theater.scouts.count %>
+
+          </div>
+
+          <p class="text-muted small mb-0">
+            件
+          </p>
         </div>
       </div>
     </div>
+
   </div>
+
+  <!-- 管理メニュー -->
+  <div class="row g-4 mb-5">
+
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body p-4">
+
+          <h2 class="h5 fw-bold mb-2">
+            募集管理
+          </h2>
+
+          <p class="text-muted mb-4">
+            募集の作成・編集・確認を行います。
+          </p>
+
+          <%= link_to "募集一覧を見る",
+                      theater_recruitments_path,
+                      class: "btn btn-primary" %>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body p-4">
+
+          <h2 class="h5 fw-bold mb-2">
+            応募者管理
+          </h2>
+
+          <p class="text-muted mb-4">
+            応募者の確認や選考状況を管理します。
+          </p>
+
+          <%= link_to "応募者一覧を見る",
+                      theater_applications_path,
+                      class: "btn btn-primary" %>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body p-4">
+
+          <h2 class="h5 fw-bold mb-2">
+            ユーザー検索
+          </h2>
+
+          <p class="text-muted mb-4">
+            登録ユーザーのプロフィールを確認できます。
+          </p>
+
+          <%= link_to "ユーザー一覧を見る",
+                      theater_users_path,
+                      class: "btn btn-primary" %>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 掲載中の募集 -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h2 class="h4 fw-bold mb-0">
+      掲載中の募集
+    </h2>
+
+    <%= link_to "募集一覧へ",
+                theater_recruitments_path,
+                class: "text-decoration-none" %>
+
+  </div>
+
+  <% recruitments = current_theater.recruitments.order(created_at: :desc).limit(3) %>
+
+  <% if recruitments.any? %>
+
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-0">
+
+        <% recruitments.each do |recruitment| %>
+
+          <div class="p-4 border-bottom">
+
+            <div class="row align-items-center g-3">
+
+              <div class="col-12 col-md-8">
+
+                <h3 class="h5 fw-bold mb-2">
+                  <%= recruitment.title %>
+                </h3>
+
+                <div class="d-flex flex-wrap gap-3 small">
+
+                  <span>
+                    応募者：
+                    <strong>
+                      <%= recruitment.applications.count %>
+                    </strong>
+                    人
+                  </span>
+
+                  <span>
+                    締切：
+                    <%= recruitment.deadline %>
+                  </span>
+
+                  <span>
+                    <% if recruitment.open? %>
+                      <span class="badge text-bg-success">
+                        募集中
+                      </span>
+                    <% else %>
+                      <span class="badge text-bg-secondary">
+                        募集終了
+                      </span>
+                    <% end %>
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div class="col-12 col-md-4 text-md-end">
+
+                <%= link_to "詳細",
+                            theater_recruitment_path(recruitment),
+                            class: "btn btn-outline-primary btn-sm" %>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+
+  <% else %>
+
+    <div class="card shadow-sm border-0">
+      <div class="card-body text-center py-5">
+
+        <p class="text-muted mb-3">
+          現在、掲載中の募集はありません。
+        </p>
+
+        <%= link_to "新しい募集を作成",
+                    new_theater_recruitment_path,
+                    class: "btn btn-primary" %>
+
+      </div>
+    </div>
+
+  <% end %>
+
 </div>
