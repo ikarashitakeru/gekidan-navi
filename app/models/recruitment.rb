@@ -4,6 +4,7 @@ class Recruitment < ApplicationRecord
 
   has_many :applications, dependent: :destroy
   has_many :scouts, dependent: :destroy
+  has_many :tags, dependent: :destroy
 
   has_one_attached :image
 

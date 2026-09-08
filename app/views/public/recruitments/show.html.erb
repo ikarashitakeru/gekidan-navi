@@ -31,12 +31,12 @@
               <% if @recruitment.image.attached? %>
 
                 <%= image_tag @recruitment.image,
-                              class: "img-fluid rounded mb-4 w-100",
+                              class: "img-fluid rounded w-100",
                               style: "height: 280px; object-fit: cover;" %>
 
               <% else %>
 
-                <div class="bg-dark rounded d-flex align-items-center justify-content-center mb-4"
+                <div class="bg-dark rounded d-flex align-items-center justify-content-center"
                      style="height: 280px;">
 
                   <span class="text-white-50">
@@ -45,6 +45,32 @@
 
                 </div>
 
+              <% end %>
+
+
+              <!-- Natural Language API 感情分析スコア -->
+              <% if @recruitment.score.present? %>
+                <div class="mt-2 mb-2">
+
+                  <span class="fs-5 fst-italic text-secondary">
+                    点数 <%= @recruitment.score %>
+                  </span>
+
+                </div>
+              <% end %>
+
+
+              <!-- Vision API 画像タグ -->
+              <% if @recruitment.tags.any? %>
+                <div class="mb-4">
+
+                  <% @recruitment.tags.each do |tag| %>
+                    <span class="badge bg-primary fs-6 me-1 px-3 py-2">
+                      <%= tag.name %>
+                    </span>
+                  <% end %>
+
+                </div>
               <% end %>
 
 
@@ -220,7 +246,10 @@
 
 
             <!-- 誰もログインしていない場合 -->
-            <% elsif !user_signed_in? && !theater_signed_in? && !admin_signed_in? && @recruitment.open? %>
+            <% elsif !user_signed_in? &&
+                     !theater_signed_in? &&
+                     !admin_signed_in? &&
+                     @recruitment.open? %>
 
               <%= link_to "ログインして応募する",
                           new_user_session_path,

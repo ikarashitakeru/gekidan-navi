@@ -16,7 +16,17 @@ class Theater::RecruitmentsController < ApplicationController
   def create
     @recruitment = current_theater.recruitments.new(recruitment_params)
 
+    # Natural Language APIで募集内容を感情分析
+    @recruitment.score = Language.get_data(recruitment_params[:description])
+
     if @recruitment.save
+      # Vision APIで画像タグを取得
+      tags = Vision.get_image_data(@recruitment.image)
+
+      tags.each do |tag|
+        @recruitment.tags.create(name: tag)
+      end
+
       redirect_to theater_recruitment_path(@recruitment),
                   notice: "募集を投稿しました。"
     else

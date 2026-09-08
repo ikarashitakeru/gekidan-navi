@@ -27,12 +27,12 @@
               <% if @recruitment.image.attached? %>
 
                 <%= image_tag @recruitment.image,
-                              class: "img-fluid rounded mb-4 w-100",
+                              class: "img-fluid rounded mb-3 w-100",
                               style: "height: 280px; object-fit: cover;" %>
 
               <% else %>
 
-                <div class="bg-dark rounded d-flex align-items-center justify-content-center mb-4"
+                <div class="bg-dark rounded d-flex align-items-center justify-content-center mb-3"
                      style="height: 280px;">
 
                   <span class="text-white-50">
@@ -41,6 +41,21 @@
 
                 </div>
 
+              <% end %>
+
+              <!-- Vision APIで取得したタグ -->
+              <% if @recruitment.tags.any? %>
+                <div class="mb-4">
+                  <p class="small text-muted mb-2">
+                    画像タグ
+                  </p>
+
+                  <% @recruitment.tags.each do |tag| %>
+                    <span class="badge text-bg-info me-1">
+                      <%= tag.name %>
+                    </span>
+                  <% end %>
+                </div>
               <% end %>
 
               <h3 class="h5 fw-bold mb-3">

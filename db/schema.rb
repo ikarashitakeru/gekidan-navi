@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_27_163449) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_06_084643) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -79,6 +79,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_27_163449) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "genre_id"
+    t.decimal "score", precision: 5, scale: 3
     t.index ["genre_id"], name: "index_recruitments_on_genre_id"
     t.index ["theater_id"], name: "index_recruitments_on_theater_id"
   end
@@ -94,6 +95,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_27_163449) do
     t.index ["recruitment_id"], name: "index_scouts_on_recruitment_id"
     t.index ["theater_id"], name: "index_scouts_on_theater_id"
     t.index ["user_id"], name: "index_scouts_on_user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.integer "recruitment_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recruitment_id"], name: "index_tags_on_recruitment_id"
   end
 
   create_table "theaters", force: :cascade do |t|
@@ -140,4 +149,5 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_27_163449) do
   add_foreign_key "scouts", "recruitments"
   add_foreign_key "scouts", "theaters"
   add_foreign_key "scouts", "users"
+  add_foreign_key "tags", "recruitments"
 end
