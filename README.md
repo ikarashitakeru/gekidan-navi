@@ -22,9 +22,13 @@
 ・劇団が新しい劇団員や出演者を募集したい時
 ・劇団への入団先や出演先を探したい時
 ・​オーディション情報を探したい時
+
 ## 設計書
-後ほど作成予定
-​
+UIFlows(https://drive.google.com/file/d/1e6YoJb1_G70i60b7qlXanGYFTTEhgyFu/view)
+ER図（https://drive.google.com/file/d/1X1NGPAnSGr-YNb9bTVHkvdWwfgtrFqze/view）
+​テーブル定義書（https://docs.google.com/spreadsheets/d/1kVgqNPwcM-E-64mSiWMkxc6XDykjl_oze-WfXO90ns4/edit?gid=1044500859#gid=1044500859）
+アプリケーション詳細設計（https://docs.google.com/spreadsheets/d/1ykqpMKsma3ZpPvl-dSJM5IA2CCtLbm91Xb4G3yL0YIU/edit?gid=549108681#gid=549108681）
+
 ## 開発環境
 - OS：Windows
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
