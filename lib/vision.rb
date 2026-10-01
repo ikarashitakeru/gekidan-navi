@@ -13,7 +13,7 @@ module Vision
       base64_image = Base64.strict_encode64(image_attachment.download)
 
       params = {
-        requests: [{
+        requests: [ {
           image: {
             content: base64_image
           },
@@ -22,7 +22,7 @@ module Vision
               type: "LABEL_DETECTION"
             }
           ]
-        }]
+        } ]
       }.to_json
 
       uri = URI.parse(api_url)
@@ -35,7 +35,7 @@ module Vision
 
       response = https.request(request, params)
       response_body = JSON.parse(response.body)
-      
+
 
       if (error = response_body.dig("responses", 0, "error")).present?
         Rails.logger.error("Vision API Error: #{error["message"]}")
