@@ -1,10 +1,364 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* ========================================
+   劇団ナビ トップページ
+======================================== */
+
+.top-page {
+  background-color: var(--theater-cream);
+  color: var(--theater-brown);
+}
+
+
+/* ========================================
+   ヒーロー
+======================================== */
+
+.hero-section {
+  background-color: var(--theater-cream);
+}
+
+.hero-visual {
+  min-height: 480px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(43, 33, 29, 0.18);
+}
+
+.hero-content {
+  min-height: 480px;
+  padding: 55px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--theater-white);
+}
+
+.hero-subtitle {
+  margin-bottom: 8px;
+  color: #e7c9b7;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.hero-service-name {
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
+
+.hero-title {
+  margin-bottom: 20px;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+}
+
+.hero-description {
+  margin-bottom: 30px;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.9;
+}
+
+.hero-search {
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+
+.hero-search .form-control,
+.hero-search .form-select {
+  min-height: 50px;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.btn-theater {
+  min-height: 50px;
+  background-color: var(--theater-red);
+  border-color: var(--theater-red);
+  color: var(--theater-white);
+  font-weight: 600;
+}
+
+.btn-theater:hover,
+.btn-theater:focus {
+  background-color: var(--theater-red-dark);
+  border-color: var(--theater-red-dark);
+  color: var(--theater-white);
+}
+
+
+/* ========================================
+   共通見出し
+======================================== */
+
+.section-label {
+  color: var(--theater-red);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.section-title {
+  color: var(--theater-brown);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.section-description {
+  margin-top: 15px;
+  color: #746761;
+  line-height: 1.8;
+}
+
+
+/* ========================================
+   劇団ナビでできること
+======================================== */
+
+.service-section {
+  padding: 25px 0;
+  background-color: var(--theater-beige);
+}
+
+.service-card {
+  position: relative;
+  height: 100%;
+  padding: 35px 30px;
+  background-color: var(--theater-white);
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(53, 40, 35, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(53, 40, 35, 0.13);
+}
+
+.service-number {
+  margin-bottom: 18px;
+  color: var(--theater-red);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.service-card h3 {
+  margin-bottom: 15px;
+  color: var(--theater-brown);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.service-card p {
+  margin-bottom: 0;
+  color: #746761;
+  line-height: 1.9;
+}
+
+
+/* ========================================
+   新着募集
+======================================== */
+
+.recruitment-section {
+  padding: 25px 0 45px;
+  background-color: var(--theater-cream);
+}
+
+.section-link {
+  color: var(--theater-red);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.section-link:hover {
+  color: var(--theater-red-dark);
+}
+
+.recruitment-card {
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--theater-white);
+  border: 1px solid #eadfd4;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(53, 40, 35, 0.07);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.recruitment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(53, 40, 35, 0.13);
+}
+
+.recruitment-image,
+.recruitment-image-placeholder {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.recruitment-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee8e1;
+  color: #8b817c;
+}
+
+.recruitment-card-body {
+  padding: 25px;
+}
+
+.recruitment-area {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+  background-color: #f4e6e8;
+  border-radius: 20px;
+  color: var(--theater-red);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.recruitment-title {
+  margin-bottom: 10px;
+  color: var(--theater-brown);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.recruitment-theater {
+  margin-bottom: 20px;
+  color: #7b6f69;
+  font-size: 0.9rem;
+}
+
+.btn-outline-theater {
+  padding: 8px 18px;
+  border: 1px solid var(--theater-red);
+  color: var(--theater-red);
+  font-weight: 600;
+}
+
+.btn-outline-theater:hover {
+  background-color: var(--theater-red);
+  color: var(--theater-white);
+}
+
+.empty-recruitment {
+  padding: 35px;
+  background-color: var(--theater-white);
+  border: 1px solid #e7ddd4;
+  border-radius: 12px;
+  color: #746761;
+  text-align: center;
+}
+
+
+/* ========================================
+   CTA
+======================================== */
+
+.top-cta {
+  padding: 70px 20px;
+  background-color: var(--theater-red);
+  color: var(--theater-white);
+}
+
+.top-cta-inner {
+  text-align: center;
+}
+
+.cta-label {
+  margin-bottom: 10px;
+  color: #ebcdd1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.top-cta h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.top-cta p:not(.cta-label) {
+  margin-bottom: 30px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.9;
+}
+
+.cta-button {
+  padding: 12px 35px;
+  background-color: var(--theater-white);
+  border: 1px solid var(--theater-white);
+  color: var(--theater-red);
+  font-weight: 700;
+}
+
+.cta-button:hover {
+  background-color: var(--theater-dark);
+  border-color: var(--theater-dark);
+  color: var(--theater-white);
+}
+
+
+/* ========================================
+   スマートフォン
+======================================== */
+
+@media (max-width: 767.98px) {
+
+  .hero-visual {
+    min-height: auto;
+    border-radius: 12px;
+  }
+
+  .hero-content {
+    min-height: 520px;
+    padding: 35px 22px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-description br {
+    display: none;
+  }
+
+  .hero-search {
+    padding: 14px;
+  }
+
+  .service-section,
+  .recruitment-section {
+    padding-top: 10px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-link {
+    font-size: 0.85rem;
+  }
+
+  .top-cta {
+    padding: 55px 20px;
+  }
+
+  .top-cta h2 {
+    font-size: 1.6rem;
+  }
+
+}
