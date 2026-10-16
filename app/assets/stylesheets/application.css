@@ -49,10 +49,12 @@
 
 .hero-title {
   margin-bottom: 20px;
+  color: #ffffff;
   font-size: clamp(2rem, 4vw, 3.4rem);
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: 0.03em;
+  text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.8);
 }
 
 .hero-description {
