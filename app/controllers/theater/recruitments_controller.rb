@@ -16,15 +16,22 @@ class Theater::RecruitmentsController < ApplicationController
   def create
     @recruitment = current_theater.recruitments.new(recruitment_params)
 
+    unless @recruitment.valid?
+      render :new, status: :unprocessable_entity
+      return
+    end
+
     # Natural Language APIで募集内容を感情分析
-    @recruitment.score = Language.get_data(recruitment_params[:description])
+    @recruitment.score = Language.get_data(@recruitment.description)
 
     if @recruitment.save
-      # Vision APIで画像タグを取得
-      tags = Vision.get_image_data(@recruitment.image)
+      # 画像がある場合のみVision APIを実行
+      if @recruitment.image.attached?
+        tags = Vision.get_image_data(@recruitment.image)
 
-      tags.each do |tag|
-        @recruitment.tags.create(name: tag)
+        tags.each do |tag|
+          @recruitment.tags.create(name: tag)
+        end
       end
 
       redirect_to theater_recruitment_path(@recruitment),
